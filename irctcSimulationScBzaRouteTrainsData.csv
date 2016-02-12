@@ -1,0 +1,10 @@
+Scenario,"Average Customer Total
+time","lower limit at
+95% confidence","upper limit at
+95% confidence
+"
+basecase,20.771,20.01,21.53
+Increment Boarding Gate Resource,18.455,17.91,19
+Increment Baggage Resource,18.501,17.84,19.17
+Increment Ticket Resource,17.376,16.95,17.8
+Increment Xray resource,17.813,17.12,18.51

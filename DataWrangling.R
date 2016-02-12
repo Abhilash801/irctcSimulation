@@ -70,4 +70,21 @@ write.xlsx(ScBzaRouteTrainsData,"G:\\One Drive\\OneDrive\\STAT - projects\\GitHu
 write.xlsx(ScBzaTrainsonlyInOneStation,"G:\\One Drive\\OneDrive\\STAT - projects\\GitHub\\irctcSimulation\\ScBzaTrainsonlyInOneStation.xlsx",sheetName = "Sheet1", row.names = FALSE)
 
 #make service times > 30 = mod and correct arrival times to reflect the same
-#
+
+install.packages('dplyr')
+ScBzaRouteTrainsData = read.csv("G:\\One Drive\\OneDrive\\STAT - projects\\GitHub\\irctcSimulation\\irctcSimulationScBzaRouteTrainsData.csv", header = TRUE)
+ScBzaRouteTrainsDataJoined=merge(x = ScBzaRouteTrainsData, y = ScBzaRouteTrainsData, by = "TrainNo", all = TRUE)
+
+
+colnames(ScBzaRouteTrainsDataJoined)
+dim(ScBzaRouteTrainsDataJoined)
+install.packages('sqldf')
+library('sqldf')
+library('dplyr')
+ScBzaRouteTrainsDataJoined=select(ScBzaRouteTrainsDataJoined,ArrivalTimeMinutesx=ArrivalTimeMinutes.x)
+ScBzaRouteTrainsDataJoined=select(ScBzaRouteTrainsDataJoined,ArrivalTimeMinutesy=ArrivalTimeMinutes.y)
+
+ScBzaRouteTrainsWithDirection = sqldf(" select *, (t1.ArrivalTimeMinutes-t2.ArrivalTimeMinutes) direction from ScBzaRouteTrainsData t1 inner join ScBzaRouteTrainsData t2 ON t1.TrainNo=t2.TrainNo")
+ScBzaRouteTrainsWithDirection= sqldf("select * from ScBzaRouteTrainsWithDirection where direction!=0")
+
+head(ScBzaRouteTrainsWithDirection)
